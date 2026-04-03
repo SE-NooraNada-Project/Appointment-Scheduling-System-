@@ -1,3 +1,4 @@
+import com.appointment.domain.AppointmentType;
 import com.appointment.domain.TimeSlot;
 import com.appointment.domain.User;
 import com.appointment.service.BookingService;
@@ -20,9 +21,8 @@ public class BookingRulesTest {
         ));
 
         User user = new User("1", "Ali");
-        TimeSlot slot = new TimeSlot(LocalDateTime.now(), 30, 5);
+        TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30, 5);
 
-        // طلب 60 دقيقة > 30
         assertNull(service.bookAppointment(user, slot, 60, 1));
         assertFalse(slot.isBooked());
     }
@@ -35,9 +35,8 @@ public class BookingRulesTest {
         ));
 
         User user = new User("1", "Ali");
-        TimeSlot slot = new TimeSlot(LocalDateTime.now(), 30, 2);
+        TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30, 2);
 
-        // طلب 3 مشاركين > سعة 2
         assertNull(service.bookAppointment(user, slot, 30, 3));
         assertFalse(slot.isBooked());
     }
@@ -50,9 +49,9 @@ public class BookingRulesTest {
         ));
 
         User user = new User("1", "Ali");
-        TimeSlot slot = new TimeSlot(LocalDateTime.now(), 30, 3);
+        TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30, 3);
 
-        var appointment = service.bookAppointment(user, slot, 30, 2);
+        var appointment = service.bookAppointment(user, slot, 30, 2, AppointmentType.GROUP);
 
         assertNotNull(appointment);
         assertTrue(slot.isBooked());

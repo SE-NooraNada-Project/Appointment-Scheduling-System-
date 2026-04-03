@@ -5,8 +5,18 @@ import com.appointment.service.AuthService;
 
 import java.time.LocalDateTime;
 
+/**
+ * Demonstrates the basic workflow of the appointment scheduling system.
+ * This includes administrator login, displaying available slots,
+ * and administrator logout.
+ */
 public class Main {
 
+    /**
+     * Runs a simple demo of the appointment scheduling system.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
 
         Administrator admin = new Administrator("1","Admin","admin","1234");

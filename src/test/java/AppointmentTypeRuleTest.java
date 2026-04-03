@@ -1,51 +1,105 @@
-import com.appointment.domain.Appointment;
 import com.appointment.domain.AppointmentType;
-import com.appointment.domain.TimeSlot;
-import com.appointment.domain.User;
-import com.appointment.service.BookingService;
+import com.appointment.service.rules.AppointmentTypeRule;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AppointmentTypeRuleTest {
+class AppointmentTypeRuleTest {
 
     @Test
-    void shouldAllowIndividualAppointmentWithOneParticipant() {
-        User user = new User("1", "Ali");
-        TimeSlot slot = new TimeSlot(LocalDateTime.now().plusHours(1), 30);
+    void shouldFailIndividualWhenParticipantsMoreThanOne() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
 
-        BookingService service = new BookingService();
+        boolean result = rule.isValid(AppointmentType.INDIVIDUAL, 2);
 
-        Appointment appointment = service.bookAppointment(user, slot, 30, 1, AppointmentType.INDIVIDUAL);
-
-        assertNotNull(appointment);
-        assertEquals(AppointmentType.INDIVIDUAL, appointment.getType());
+        assertFalse(result);
     }
 
     @Test
-    void shouldRejectIndividualAppointmentWithMoreThanOneParticipant() {
-        User user = new User("1", "Ali");
-        TimeSlot slot = new TimeSlot(LocalDateTime.now().plusHours(1), 30);
+    void shouldPassIndividualWhenOneParticipant() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
 
-        BookingService service = new BookingService();
+        boolean result = rule.isValid(AppointmentType.INDIVIDUAL, 1);
 
-        Appointment appointment = service.bookAppointment(user, slot, 30, 2, AppointmentType.INDIVIDUAL);
-
-        assertNull(appointment);
+        assertTrue(result);
     }
 
     @Test
-    void shouldAllowGroupAppointmentWithMoreThanOneParticipant() {
-        User user = new User("1", "Ali");
-        TimeSlot slot = new TimeSlot(LocalDateTime.now().plusHours(1), 30, 5);
+    void shouldFailGroupWhenOnlyOneParticipant() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
 
-        BookingService service = new BookingService();
+        boolean result = rule.isValid(AppointmentType.GROUP, 1);
 
-        Appointment appointment = service.bookAppointment(user, slot, 30, 3, AppointmentType.GROUP);
+        assertFalse(result);
+    }
 
-        assertNotNull(appointment);
-        assertEquals(AppointmentType.GROUP, appointment.getType());
+    @Test
+    void shouldPassGroupWhenParticipantsMoreThanOne() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
+
+        boolean result = rule.isValid(AppointmentType.GROUP, 3);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void shouldPassAssessmentWhenOneParticipant() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
+
+        boolean result = rule.isValid(AppointmentType.ASSESSMENT, 1);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void shouldFailAssessmentWhenParticipantsMoreThanOne() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
+
+        boolean result = rule.isValid(AppointmentType.ASSESSMENT, 2);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void shouldPassFollowUpWhenOneParticipant() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
+
+        boolean result = rule.isValid(AppointmentType.FOLLOW_UP, 1);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void shouldFailFollowUpWhenParticipantsMoreThanOne() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
+
+        boolean result = rule.isValid(AppointmentType.FOLLOW_UP, 2);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void shouldPassOtherTypesWhenParticipantsGreaterThanZero() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
+
+        boolean result = rule.isValid(AppointmentType.VIRTUAL, 2);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void shouldFailOtherTypesWhenParticipantsZero() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
+
+        boolean result = rule.isValid(AppointmentType.VIRTUAL, 0);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void shouldReturnErrorMessage() {
+        AppointmentTypeRule rule = new AppointmentTypeRule();
+
+        assertEquals("Invalid participants count for appointment type", rule.errorMessage());
     }
 }

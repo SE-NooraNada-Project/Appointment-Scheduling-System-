@@ -23,4 +23,17 @@ public class ScheduleTest {
 
         assertEquals(1, schedule.getAvailableSlots().size());
     }
+
+    @Test
+    void shouldReturnAllSlots() {
+        Schedule schedule = new Schedule();
+
+        TimeSlot slot1 = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
+        TimeSlot slot2 = new TimeSlot(LocalDateTime.now().plusDays(2), 30);
+
+        schedule.addSlot(slot1);
+        schedule.addSlot(slot2);
+
+        assertEquals(2, schedule.getAllSlots().size());
+    }
 }
