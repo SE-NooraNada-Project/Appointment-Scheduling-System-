@@ -7,6 +7,8 @@ import java.util.List;
 /**
  * Repository interface for managing appointment persistence.
  * Defines basic operations for saving, retrieving, and deleting appointments.
+ * @author Nada, Noora
+ * @version 1.0
  */
 public interface AppointmentRepository {
 

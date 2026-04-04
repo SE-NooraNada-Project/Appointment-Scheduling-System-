@@ -3,6 +3,8 @@ package com.appointment.domain;
 /**
  * Represents the current administrator session.
  * Tracks whether an administrator is logged in.
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class Session {
 

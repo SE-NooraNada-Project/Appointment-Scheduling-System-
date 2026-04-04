@@ -3,6 +3,8 @@ package com.appointment.domain;
 /**
  * Represents an administrator in the system.
  * An administrator is a specialized user with login credentials.
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class Administrator extends User {
 

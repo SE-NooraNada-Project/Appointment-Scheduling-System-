@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 /**
  * Provides the current date and time.
  * This abstraction allows time-related logic to be tested using mocks.
+ *
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class TimeProvider {
 

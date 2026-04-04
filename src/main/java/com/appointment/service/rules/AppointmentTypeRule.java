@@ -3,16 +3,20 @@ package com.appointment.service.rules;
 import com.appointment.domain.AppointmentType;
 
 /**
- * Validates participant count against the selected appointment type.
+ * Validation rule that ensures the number of participants
+ * is appropriate for the selected appointment type.
+ *
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class AppointmentTypeRule {
 
     /**
-     * Checks whether the participants count is valid for the appointment type.
+     * Validates the participant count based on the appointment type.
      *
      * @param type appointment type
      * @param participantsCount number of participants
-     * @return true if valid, false otherwise
+     * @return true if the participant count is valid for the given type, false otherwise
      */
     public boolean isValid(AppointmentType type, int participantsCount) {
         if (type == AppointmentType.INDIVIDUAL) {
@@ -31,9 +35,9 @@ public class AppointmentTypeRule {
     }
 
     /**
-     * Returns the error message for invalid type rules.
+     * Returns the error message when validation fails.
      *
-     * @return error message
+     * @return error message describing the rule violation
      */
     public String errorMessage() {
         return "Invalid participants count for appointment type";

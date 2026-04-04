@@ -8,6 +8,8 @@ import java.util.List;
 /**
  * In-memory implementation of the AppointmentRepository interface.
  * Stores appointments in a local list during runtime.
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class InMemoryAppointmentRepository implements AppointmentRepository {
 

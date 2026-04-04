@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
  * Represents a time slot available for booking appointments.
  * A time slot has a start time, duration, maximum participant capacity,
  * and a booking status.
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class TimeSlot {
 

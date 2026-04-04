@@ -4,6 +4,9 @@ package com.appointment.domain;
  * Represents an appointment booked by a user.
  * Contains details such as the associated time slot,
  * number of participants, appointment type, and status.
+ *
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class Appointment {
 

@@ -5,6 +5,9 @@ import com.appointment.domain.User;
 /**
  * Observer interface used for notification services.
  * Defines the method required to send notifications to users.
+ *
+ * @author Nada, Noora
+ * @version 1.0
  */
 public interface Observer {
 

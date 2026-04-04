@@ -7,14 +7,17 @@ import java.util.List;
 
 /**
  * Service responsible for sending appointment reminder notifications.
+ *
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class ReminderService {
 
-    /** Notification service used to send reminders */
+    /** Notification service used to send reminders. */
     private final Observer notificationService;
 
     /**
-     * Constructs a ReminderService with a notification observer.
+     * Constructs a reminder service with a notification observer.
      *
      * @param notificationService observer used for notifications
      */
@@ -23,9 +26,9 @@ public class ReminderService {
     }
 
     /**
-     * Sends reminders for a list of appointments.
+     * Sends reminder messages for the provided appointments.
      *
-     * @param appointments list of appointments
+     * @param appointments list of appointments to notify about
      */
     public void sendReminders(List<Appointment> appointments) {
         for (Appointment appointment : appointments) {

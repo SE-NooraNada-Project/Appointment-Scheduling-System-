@@ -17,6 +17,8 @@ import java.util.List;
  * Service responsible for booking, canceling, and modifying appointments.
  * It applies booking validation rules and optionally stores appointments
  * using a repository.
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class BookingService {
 

@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 /**
  * Represents a schedule containing multiple time slots.
  * Provides methods for adding and retrieving available slots.
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class Schedule {
 

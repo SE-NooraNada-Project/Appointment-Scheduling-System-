@@ -3,6 +3,9 @@ package com.appointment.domain;
 /**
  * Represents a system user who can book appointments.
  * Each user has a unique identifier and a name.
+ *
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class User {
 

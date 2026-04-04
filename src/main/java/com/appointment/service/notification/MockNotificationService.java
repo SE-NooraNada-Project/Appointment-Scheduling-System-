@@ -7,7 +7,10 @@ import java.util.List;
 
 /**
  * Mock implementation of the Observer interface.
- * Used in tests to store sent notification messages.
+ * Used in tests to store sent notification messages
+ *
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class MockNotificationService implements Observer {
 

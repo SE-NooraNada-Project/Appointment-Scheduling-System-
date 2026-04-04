@@ -6,6 +6,8 @@ import com.appointment.domain.Session;
 /**
  * Service responsible for administrator authentication operations,
  * including login and logout.
+ * @author Nada, Noora
+ * @version 1.0
  */
 public class AuthService {
 
