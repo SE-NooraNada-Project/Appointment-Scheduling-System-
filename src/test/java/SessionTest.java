@@ -4,10 +4,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SessionTest {
+public class SessionTest {
 
     @Test
-    void shouldLoginAdmin() {
+    void shouldBeLoggedOutInitially() {
+        Session session = new Session();
+
+        assertFalse(session.isAdminLoggedIn());
+        assertNull(session.getLoggedInAdmin());
+    }
+
+    @Test
+    void shouldLoginAdministrator() {
         Session session = new Session();
         Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
@@ -18,7 +26,7 @@ class SessionTest {
     }
 
     @Test
-    void shouldLogoutAdmin() {
+    void shouldLogoutAdministrator() {
         Session session = new Session();
         Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 

@@ -6,13 +6,11 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 class DurationRuleTest {
 
     @Test
     void shouldFailWhenDurationTooLong() {
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
-
         DurationRule rule = new DurationRule(30);
 
         boolean result = rule.isValid(slot, 60, 1);
@@ -23,11 +21,17 @@ class DurationRuleTest {
     @Test
     void shouldPassWhenDurationValid() {
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
-
         DurationRule rule = new DurationRule(60);
 
         boolean result = rule.isValid(slot, 30, 1);
 
         assertTrue(result);
+    }
+
+    @Test
+    void shouldReturnDurationErrorMessage() {
+        DurationRule rule = new DurationRule(60);
+
+        assertEquals("Invalid duration: exceeds maximum allowed minutes", rule.errorMessage());
     }
 }
