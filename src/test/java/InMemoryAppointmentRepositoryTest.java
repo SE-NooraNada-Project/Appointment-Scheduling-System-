@@ -23,7 +23,7 @@ public class InMemoryAppointmentRepositoryTest {
     void shouldReturnFalseWhenDeletingNonExistingAppointment() {
         InMemoryAppointmentRepository repository = new InMemoryAppointmentRepository();
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
         Appointment appointment = new Appointment(user, slot, 1, AppointmentType.INDIVIDUAL);
 
@@ -36,7 +36,7 @@ public class InMemoryAppointmentRepositoryTest {
     void shouldReturnEmptyListWhenUserIdNotFound() {
         InMemoryAppointmentRepository repository = new InMemoryAppointmentRepository();
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
         Appointment appointment = new Appointment(user, slot, 1, AppointmentType.INDIVIDUAL);
         repository.save(appointment);
@@ -50,7 +50,7 @@ public class InMemoryAppointmentRepositoryTest {
     void shouldReturnCopyFromFindAll() {
         InMemoryAppointmentRepository repository = new InMemoryAppointmentRepository();
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
         Appointment appointment = new Appointment(user, slot, 1, AppointmentType.INDIVIDUAL);
         repository.save(appointment);

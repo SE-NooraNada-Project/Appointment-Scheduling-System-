@@ -15,7 +15,7 @@ public class AppointmentRepositoryTest {
     void shouldSaveAppointment() {
         InMemoryAppointmentRepository repository = new InMemoryAppointmentRepository();
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
         Appointment appointment = new Appointment(user, slot, 1, AppointmentType.INDIVIDUAL);
 
@@ -28,8 +28,8 @@ public class AppointmentRepositoryTest {
     void shouldFindAppointmentsByUserId() {
         InMemoryAppointmentRepository repository = new InMemoryAppointmentRepository();
 
-        User user1 = new User("1", "Ali");
-        User user2 = new User("2", "Sara");
+        User user1 = new User("1", "Ali", "ali@test.com");
+        User user2 = new User("2", "Sara", "sara@test.com");
 
         Appointment appointment1 = new Appointment(
                 user1,
@@ -56,7 +56,7 @@ public class AppointmentRepositoryTest {
     void shouldDeleteAppointment() {
         InMemoryAppointmentRepository repository = new InMemoryAppointmentRepository();
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         Appointment appointment = new Appointment(
                 user,
                 new TimeSlot(LocalDateTime.now().plusDays(1), 30),

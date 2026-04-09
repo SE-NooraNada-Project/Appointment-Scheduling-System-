@@ -20,7 +20,7 @@ public class BookingRulesTest {
                 new ParticipantLimitRule()
         ));
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30, 5);
 
         assertNull(service.bookAppointment(user, slot, 60, 1));
@@ -34,7 +34,7 @@ public class BookingRulesTest {
                 new ParticipantLimitRule()
         ));
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30, 2);
 
         assertNull(service.bookAppointment(user, slot, 30, 3));
@@ -48,7 +48,7 @@ public class BookingRulesTest {
                 new ParticipantLimitRule()
         ));
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30, 3);
 
         var appointment = service.bookAppointment(user, slot, 30, 2, AppointmentType.GROUP);

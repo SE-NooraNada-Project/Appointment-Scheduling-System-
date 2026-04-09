@@ -21,7 +21,7 @@ public class BookingServiceTimeMockTest {
 
         BookingService service = new BookingService(null, null, timeProvider);
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(mockedNow.plusDays(1), 30);
 
         Appointment appointment = service.bookAppointment(user, slot);
@@ -40,7 +40,7 @@ public class BookingServiceTimeMockTest {
 
         BookingService service = new BookingService(null, null, timeProvider);
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(mockedNow.minusDays(1), 30);
 
         Appointment appointment = service.bookAppointment(user, slot);

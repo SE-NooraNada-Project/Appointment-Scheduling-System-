@@ -13,7 +13,7 @@ public class AppointmentModificationTest {
 
         BookingService service = new BookingService();
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
 
         Appointment appointment = service.bookAppointment(user, slot);
@@ -29,7 +29,7 @@ public class AppointmentModificationTest {
 
         BookingService service = new BookingService();
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().minusDays(1), 30);
 
         Appointment appointment = new Appointment(user, slot);
@@ -44,7 +44,7 @@ public class AppointmentModificationTest {
 
         BookingService service = new BookingService();
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
 
         TimeSlot oldSlot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
         TimeSlot newSlot = new TimeSlot(LocalDateTime.now().plusDays(2), 30);
@@ -60,7 +60,7 @@ public class AppointmentModificationTest {
         assertEquals(appointment.getUser(), modifiedAppointment.getUser());
         assertEquals(appointment.getType(), modifiedAppointment.getType());
         assertEquals(appointment.getParticipantsCount(), modifiedAppointment.getParticipantsCount());
-        
+
         assertFalse(oldSlot.isBooked());
         assertTrue(newSlot.isBooked());
     }

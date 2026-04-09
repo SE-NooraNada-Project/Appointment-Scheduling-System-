@@ -10,8 +10,8 @@ public class AppointmentTypeTest {
     @Test
     void shouldCreateAppointmentWithType() {
 
-        User user = new User("1","Ali");
-        TimeSlot slot = new TimeSlot(LocalDateTime.now(),30);
+        User user = new User("1", "Ali", "ali@test.com");
+        TimeSlot slot = new TimeSlot(LocalDateTime.now(), 30);
 
         Appointment appointment = new Appointment(
                 user,

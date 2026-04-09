@@ -8,7 +8,7 @@ import javax.mail.internet.*;
 
 /**
  * Real Email Notification Service
- * Sends actual emails using SMTP
+ * Sends actual emails using SMTP.
  */
 public class EmailNotificationService implements Observer {
 
@@ -18,7 +18,12 @@ public class EmailNotificationService implements Observer {
     @Override
     public void notify(User user, String message) {
 
-        String toEmail = "s12217418@stu.najah.edu";
+        if (user == null || user.getEmail() == null || user.getEmail().isBlank()) {
+            System.out.println("Failed to send email: user email is missing.");
+            return;
+        }
+
+        String toEmail = user.getEmail();
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -26,7 +31,7 @@ public class EmailNotificationService implements Observer {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
-        Session session = Session.getInstance(props, new Authenticator() {
+        javax.mail.Session session = javax.mail.Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, password);
@@ -46,7 +51,7 @@ public class EmailNotificationService implements Observer {
 
             Transport.send(msg);
 
-            System.out.println("Email sent successfully!");
+            System.out.println("Email sent to: " + toEmail);
 
         } catch (MessagingException e) {
             e.printStackTrace();

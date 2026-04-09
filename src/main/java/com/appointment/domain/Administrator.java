@@ -3,6 +3,7 @@ package com.appointment.domain;
 /**
  * Represents an administrator in the system.
  * An administrator is a specialized user with login credentials.
+ *
  * @author Nada, Noora
  * @version 1.0
  */
@@ -19,11 +20,12 @@ public class Administrator extends User {
      *
      * @param id administrator ID
      * @param name administrator name
+     * @param email administrator email
      * @param username login username
      * @param password login password
      */
-    public Administrator(String id, String name, String username, String password) {
-        super(id, name);
+    public Administrator(String id, String name, String email, String username, String password) {
+        super(id, name, email); // 👈 تعديل مهم
         this.username = username;
         this.password = password;
     }

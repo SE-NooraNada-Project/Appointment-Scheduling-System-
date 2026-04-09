@@ -9,7 +9,7 @@ class SessionTest {
     @Test
     void shouldLoginAdmin() {
         Session session = new Session();
-        Administrator admin = new Administrator("1","Admin","admin","1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         session.login(admin);
 
@@ -20,7 +20,7 @@ class SessionTest {
     @Test
     void shouldLogoutAdmin() {
         Session session = new Session();
-        Administrator admin = new Administrator("1","Admin","admin","1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         session.login(admin);
         session.logout();

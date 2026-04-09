@@ -15,7 +15,7 @@ public class ReminderServiceTest {
 
     @Test
     void shouldSendReminder() {
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
 
         TimeSlot slot = new TimeSlot(
                 LocalDateTime.now().plusHours(1),
@@ -33,5 +33,4 @@ public class ReminderServiceTest {
         assertTrue(mockService.getSentMessages().get(0).contains("Reminder"));
         assertTrue(mockService.getSentMessages().get(0).contains("Ali"));
     }
-
 }

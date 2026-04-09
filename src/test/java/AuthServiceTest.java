@@ -10,7 +10,7 @@ public class AuthServiceTest {
     @Test
     void loginShouldSucceedWithCorrectCredentials() {
 
-        Administrator admin = new Administrator("1","Admin","admin","1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
         Session session = new Session();
         AuthService auth = new AuthService();
 
@@ -23,7 +23,7 @@ public class AuthServiceTest {
     @Test
     void loginShouldFailWithWrongPassword() {
 
-        Administrator admin = new Administrator("1","Admin","admin","1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
         Session session = new Session();
         AuthService auth = new AuthService();
 
@@ -35,7 +35,7 @@ public class AuthServiceTest {
     @Test
     void shouldLoginSuccessfully() {
         Session session = new Session();
-        Administrator admin = new Administrator("1","Admin","admin","1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         AuthService service = new AuthService();
 
@@ -48,7 +48,7 @@ public class AuthServiceTest {
     @Test
     void shouldFailLoginWithWrongUsername() {
         Session session = new Session();
-        Administrator admin = new Administrator("1","Admin","admin","1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         AuthService service = new AuthService();
 
@@ -60,7 +60,7 @@ public class AuthServiceTest {
     @Test
     void shouldLogout() {
         Session session = new Session();
-        Administrator admin = new Administrator("1","Admin","admin","1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         session.login(admin);
 
@@ -73,7 +73,7 @@ public class AuthServiceTest {
     @Test
     void shouldFailLoginWhenSessionIsNull() {
         AuthService auth = new AuthService();
-        Administrator admin = new Administrator("1", "Admin", "admin", "1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         boolean result = auth.login(null, admin, "admin", "1234");
 
@@ -94,7 +94,7 @@ public class AuthServiceTest {
     void shouldFailLoginWhenUsernameIsNull() {
         AuthService auth = new AuthService();
         Session session = new Session();
-        Administrator admin = new Administrator("1", "Admin", "admin", "1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         boolean result = auth.login(session, admin, null, "1234");
 
@@ -105,7 +105,7 @@ public class AuthServiceTest {
     void shouldFailLoginWhenPasswordIsNull() {
         AuthService auth = new AuthService();
         Session session = new Session();
-        Administrator admin = new Administrator("1", "Admin", "admin", "1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         boolean result = auth.login(session, admin, "admin", null);
 
@@ -116,7 +116,7 @@ public class AuthServiceTest {
     void shouldFailLoginWithWrongCredentials() {
         AuthService auth = new AuthService();
         Session session = new Session();
-        Administrator admin = new Administrator("1", "Admin", "admin", "1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         boolean result = auth.login(session, admin, "wrong", "wrong");
 
@@ -128,7 +128,7 @@ public class AuthServiceTest {
     void shouldLogoutSuccessfully() {
         AuthService auth = new AuthService();
         Session session = new Session();
-        Administrator admin = new Administrator("1", "Admin", "admin", "1234");
+        Administrator admin = new Administrator("1", "Admin", "admin@test.com", "admin", "1234");
 
         auth.login(session, admin, "admin", "1234");
         auth.logout(session);

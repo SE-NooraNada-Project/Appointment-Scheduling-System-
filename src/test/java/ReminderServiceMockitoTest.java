@@ -21,7 +21,7 @@ public class ReminderServiceMockitoTest {
 
         ReminderService reminderService = new ReminderService(mockObserver);
 
-        User user = new User("1", "Ali");
+        User user = new User("1", "Ali", "ali@test.com");
         TimeSlot slot = new TimeSlot(LocalDateTime.now().plusHours(1), 30);
         Appointment appointment = new Appointment(user, slot);
 
