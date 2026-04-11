@@ -190,4 +190,80 @@ public class BookingServiceTest {
         assertNotNull(modified);
         assertEquals(newSlot, modified.getSlot());
     }
+
+    @Test
+    void shouldFailBookingGroupTypeWithOneParticipant() {
+        BookingService service = new BookingService();
+        User user = new User("1", "Ali", "ali@test.com");
+        TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30, 5);
+
+        Appointment appointment = service.bookAppointment(user, slot, 30, 1, AppointmentType.GROUP);
+
+        assertNull(appointment);
+        assertFalse(slot.isBooked());
+    }
+
+    @Test
+    void shouldFailBookingFollowUpWithTwoParticipants() {
+        BookingService service = new BookingService();
+        User user = new User("1", "Ali", "ali@test.com");
+        TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30, 5);
+
+        Appointment appointment = service.bookAppointment(user, slot, 30, 2, AppointmentType.FOLLOW_UP);
+
+        assertNull(appointment);
+        assertFalse(slot.isBooked());
+    }
+
+
+    @Test
+    void shouldCreateDefaultServiceAndBookSuccessfully() {
+        BookingService service = new BookingService();
+
+        User user = new User("1", "Ali", "ali@test.com");
+        TimeSlot slot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
+
+        Appointment appointment = service.bookAppointment(user, slot);
+
+        assertNotNull(appointment);
+    }
+
+    @Test
+    void shouldFailBookAppointmentWhenPastSlotInSimpleOverload() {
+        BookingService service = new BookingService();
+        User user = new User("1", "Ali", "ali@test.com");
+        TimeSlot slot = new TimeSlot(LocalDateTime.now().minusHours(1), 30);
+
+        Appointment appointment = service.bookAppointment(user, slot);
+
+        assertNull(appointment);
+    }
+
+    @Test
+    void shouldFailBookAppointmentWhenPastSlotInSecondOverload() {
+        BookingService service = new BookingService();
+        User user = new User("1", "Ali", "ali@test.com");
+        TimeSlot slot = new TimeSlot(LocalDateTime.now().minusHours(1), 30);
+
+        Appointment appointment = service.bookAppointment(user, slot, 30, 1);
+
+        assertNull(appointment);
+    }
+
+    @Test
+    void shouldFailAdminModifyWhenSessionNotLoggedIn() {
+        BookingService service = new BookingService();
+        Session session = new Session();
+        User user = new User("1", "Ali", "ali@test.com");
+
+        TimeSlot oldSlot = new TimeSlot(LocalDateTime.now().plusDays(1), 30);
+        TimeSlot newSlot = new TimeSlot(LocalDateTime.now().plusDays(2), 30);
+        Appointment appointment = service.bookAppointment(user, oldSlot);
+
+        Appointment result = service.adminModifyAppointment(session, appointment, newSlot);
+
+        assertNull(result);
+        assertTrue(oldSlot.isBooked());
+        assertFalse(newSlot.isBooked());
+    }
 }
