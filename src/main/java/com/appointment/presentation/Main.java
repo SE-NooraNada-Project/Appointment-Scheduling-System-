@@ -305,6 +305,8 @@ public class Main {
             System.out.println("1. View All Reservations");
             System.out.println("2. Modify Reservation");
             System.out.println("3. Cancel Reservation");
+            System.out.println("4. Add Appointment Slot");
+            System.out.println("5. Delete Appointment Slot");
             System.out.println("0. Back");
             System.out.println("---------------------------------------------");
 
@@ -314,6 +316,8 @@ public class Main {
                 case 1 -> viewAllReservations();
                 case 2 -> adminModifyReservation();
                 case 3 -> adminCancelReservation();
+                case 4 -> adminAddAppointmentSlot();
+                case 5 -> adminDeleteAppointmentSlot();
                 case 0 -> back = true;
                 default -> System.out.println("Invalid choice. Please try again.");
             }
@@ -408,7 +412,85 @@ public class Main {
             System.out.println("Administrator cancellation failed.");
         }
     }
+    private static void adminAddAppointmentSlot() {
+        System.out.println("Add New Appointment Slot");
 
+        String dateTimeInput = readLine("Enter slot date and time (yyyy-MM-dd HH:mm): ");
+        int duration = readInt("Enter duration in minutes: ");
+        int capacity = readInt("Enter maximum participants: ");
+
+        try {
+            LocalDateTime start = LocalDateTime.parse(dateTimeInput, formatter);
+
+            if (!start.isAfter(LocalDateTime.now())) {
+                System.out.println("Slot must be in the future.");
+                return;
+            }
+
+            if (duration <= 0 || capacity <= 0) {
+                System.out.println("Duration and capacity must be greater than zero.");
+                return;
+            }
+
+            for (TimeSlot slot : slots) {
+                if (slot.getStart().equals(start)) {
+                    System.out.println("A slot already exists at this time.");
+                    return;
+                }
+            }
+
+            TimeSlot newSlot = new TimeSlot(start, duration, capacity);
+            slots.add(newSlot);
+
+            System.out.println("Appointment slot added successfully.");
+            System.out.println("New slot: " + formatSlot(newSlot));
+
+        } catch (Exception e) {
+            System.out.println("Invalid date/time format. Please use yyyy-MM-dd HH:mm");
+        }
+    }
+    private static void adminDeleteAppointmentSlot() {
+        List<TimeSlot> futureSlots = new ArrayList<>();
+
+        for (TimeSlot slot : slots) {
+            if (slot.isFuture(LocalDateTime.now())) {
+                futureSlots.add(slot);
+            }
+        }
+
+        if (futureSlots.isEmpty()) {
+            System.out.println("No future slots available to delete.");
+            return;
+        }
+
+        System.out.println("Future slots:");
+        for (int i = 0; i < futureSlots.size(); i++) {
+            TimeSlot slot = futureSlots.get(i);
+            String status = slot.isBooked() ? "BOOKED" : "AVAILABLE";
+            System.out.println((i + 1) + ". " + formatSlot(slot) + " | Status: " + status);
+        }
+
+        int choice = readInt("Select slot number to delete: ");
+        if (choice < 1 || choice > futureSlots.size()) {
+            System.out.println("Invalid slot selection.");
+            return;
+        }
+
+        TimeSlot selectedSlot = futureSlots.get(choice - 1);
+
+        if (selectedSlot.isBooked()) {
+            System.out.println("Cannot delete a booked slot.");
+            return;
+        }
+
+        boolean removed = slots.remove(selectedSlot);
+
+        if (removed) {
+            System.out.println("Appointment slot deleted successfully.");
+        } else {
+            System.out.println("Deletion failed.");
+        }
+    }
     private static void sendMockAppointmentReminders() {
         List<Appointment> allAppointments = repository.findAll();
 
