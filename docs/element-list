@@ -1,0 +1,7 @@
+com.appointment.domain
+com.appointment.presentation
+com.appointment.repository
+com.appointment.service
+com.appointment.service.notification
+com.appointment.service.rules
+com.appointment.service.time

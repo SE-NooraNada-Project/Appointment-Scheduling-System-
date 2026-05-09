@@ -1,0 +1,46 @@
+@startuml
+
+class User
+class Administrator
+class Appointment
+class TimeSlot
+class Schedule
+class Session
+
+class AuthService
+class BookingService
+class ReminderService
+
+interface AppointmentRepository
+class InMemoryAppointmentRepository
+
+interface Observer
+class MockNotificationService
+class EmailNotificationService
+
+interface BookingRuleStrategy
+class DurationRule
+class ParticipantLimitRule
+class AppointmentTypeRule
+
+Administrator --|> User
+
+InMemoryAppointmentRepository ..|> AppointmentRepository
+
+MockNotificationService ..|> Observer
+EmailNotificationService ..|> Observer
+
+DurationRule ..|> BookingRuleStrategy
+ParticipantLimitRule ..|> BookingRuleStrategy
+AppointmentTypeRule ..|> BookingRuleStrategy
+
+BookingService --> AppointmentRepository
+BookingService --> BookingRuleStrategy
+ReminderService --> Observer
+
+Appointment --> User
+Appointment --> TimeSlot
+Schedule --> TimeSlot
+Session --> User
+
+@enduml
