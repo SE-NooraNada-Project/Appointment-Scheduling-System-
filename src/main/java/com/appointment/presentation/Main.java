@@ -16,7 +16,7 @@ import com.appointment.service.rules.BookingRuleStrategy;
 import com.appointment.service.rules.DurationRule;
 import com.appointment.service.rules.ParticipantLimitRule;
 import com.appointment.service.time.TimeProvider;
-
+import java.util.logging.Logger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.Scanner;
  * Command-line interface for the Appointment Scheduling System.
  */
 public class Main {
-
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
     private static final Scanner scanner = new Scanner(System.in);
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -45,6 +45,7 @@ public class Main {
 
     private static final List<TimeSlot> slots = new ArrayList<>();
 
+
     static {
         List<BookingRuleStrategy> rules = new ArrayList<>();
         rules.add(new DurationRule(120));
@@ -60,9 +61,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("========================================");
-        System.out.println("      Appointment Scheduling System");
-        System.out.println("========================================");
+        logger.info("========================================");
+        logger.info("      Appointment Scheduling System");
+        logger.info("========================================");
 
         boolean running = true;
 
@@ -83,9 +84,9 @@ public class Main {
                 case 10 -> sendEmailAppointmentReminders();
                 case 0 -> {
                     running = false;
-                    System.out.println("Exiting system. Goodbye.");
+                    logger.info("Exiting system. Goodbye.");
                 }
-                default -> System.out.println("Invalid choice. Please try again.");
+                default -> logger.info("Invalid choice. Please try again.");
             }
 
             System.out.println();
@@ -93,24 +94,24 @@ public class Main {
     }
 
     private static void printMainMenu() {
-        System.out.println("--------------- Main Menu ---------------");
-        System.out.println("1. Administrator Login");
-        System.out.println("2. Administrator Logout");
-        System.out.println("3. View Available Appointment Slots");
-        System.out.println("4. Book Appointment");
-        System.out.println("5. View My Appointments");
-        System.out.println("6. Modify My Appointment");
-        System.out.println("7. Cancel My Appointment");
-        System.out.println("8. Administrator Manage Reservations");
-        System.out.println("9. Send Mock Appointment Reminders");
-        System.out.println("10. Send Email Appointment Reminders");
-        System.out.println("0. Exit");
-        System.out.println("-----------------------------------------");
+        logger.info("--------------- Main Menu ---------------");
+        logger.info("1. Administrator Login");
+        logger.info("2. Administrator Logout");
+        logger.info("3. View Available Appointment Slots");
+        logger.info("4. Book Appointment");
+        logger.info("5. View My Appointments");
+        logger.info("6. Modify My Appointment");
+        logger.info("7. Cancel My Appointment");
+        logger.info("8. Administrator Manage Reservations");
+        logger.info("9. Send Mock Appointment Reminders");
+        logger.info("10. Send Email Appointment Reminders");
+        logger.info("0. Exit");
+        logger.info("-----------------------------------------");
     }
 
     private static void administratorLogin() {
         if (session.isAdminLoggedIn()) {
-            System.out.println("Administrator is already logged in.");
+            logger.info("Administrator is already logged in.");
             return;
         }
 
@@ -120,33 +121,33 @@ public class Main {
         boolean success = authService.login(session, admin, username, password);
 
         if (success) {
-            System.out.println("Login successful.");
+            logger.info("Login successful.");
         } else {
-            System.out.println("Invalid credentials.");
+            logger.info("Invalid credentials.");
         }
     }
 
     private static void administratorLogout() {
         if (!session.isAdminLoggedIn()) {
-            System.out.println("No administrator is currently logged in.");
+            logger.info("No administrator is currently logged in.");
             return;
         }
 
         authService.logout(session);
-        System.out.println("Administrator logged out successfully.");
+        logger.info("Administrator logged out successfully.");
     }
 
     private static void viewAvailableSlots() {
         List<TimeSlot> availableSlots = getAvailableSlots();
 
         if (availableSlots.isEmpty()) {
-            System.out.println("No available slots found.");
+            logger.info("No available slots found.");
             return;
         }
 
-        System.out.println("Available Slots:");
+        logger.info("Available Slots:");
         for (int i = 0; i < availableSlots.size(); i++) {
-            System.out.println((i + 1) + ". " + formatSlot(availableSlots.get(i)));
+            logger.info((i + 1) + ". " + formatSlot(availableSlots.get(i)));
         }
     }
 
@@ -158,18 +159,18 @@ public class Main {
 
         List<TimeSlot> availableSlots = getAvailableSlots();
         if (availableSlots.isEmpty()) {
-            System.out.println("No available slots for booking.");
+            logger.info("No available slots for booking.");
             return;
         }
 
-        System.out.println("Choose a slot:");
+        logger.info("Choose a slot:");
         for (int i = 0; i < availableSlots.size(); i++) {
-            System.out.println((i + 1) + ". " + formatSlot(availableSlots.get(i)));
+            logger.info((i + 1) + ". " + formatSlot(availableSlots.get(i)));
         }
 
         int slotChoice = readInt("Enter slot number: ");
         if (slotChoice < 1 || slotChoice > availableSlots.size()) {
-            System.out.println("Invalid slot selection.");
+            logger.info("Invalid slot selection.");
             return;
         }
 
@@ -180,7 +181,7 @@ public class Main {
 
         AppointmentType selectedType = chooseAppointmentType();
         if (selectedType == null) {
-            System.out.println("Invalid appointment type.");
+            logger.info("Invalid appointment type.");
             return;
         }
 
@@ -193,12 +194,12 @@ public class Main {
         );
 
         if (appointment != null) {
-            System.out.println("Appointment booked successfully.");
-            System.out.println("Status: " + appointment.getStatus());
-            System.out.println("Type: " + appointment.getType());
-            System.out.println("Slot: " + formatSlot(appointment.getSlot()));
+            logger.info("Appointment booked successfully.");
+            logger.info("Status: " + appointment.getStatus());
+            logger.info("Type: " + appointment.getType());
+            logger.info("Slot: " + formatSlot(appointment.getSlot()));
         } else {
-            System.out.println("Booking failed. Please check duration, participants, slot availability, or appointment type.");
+            logger.info("Booking failed. Please check duration, participants, slot availability, or appointment type.");
         }
     }
 
@@ -207,7 +208,7 @@ public class Main {
         List<Appointment> appointments = repository.findByUserId(userId);
 
         if (appointments.isEmpty()) {
-            System.out.println("No appointments found for this user.");
+            logger.info("No appointments found for this user.");
             return;
         }
 
@@ -219,16 +220,16 @@ public class Main {
         List<Appointment> myAppointments = repository.findByUserId(userId);
 
         if (myAppointments.isEmpty()) {
-            System.out.println("No appointments found to modify.");
+            logger.info("No appointments found to modify.");
             return;
         }
 
-        System.out.println("Your appointments:");
+        logger.info("Your appointments:");
         printAppointments(myAppointments);
 
         int appointmentChoice = readInt("Select appointment number to modify: ");
         if (appointmentChoice < 1 || appointmentChoice > myAppointments.size()) {
-            System.out.println("Invalid appointment selection.");
+            logger.info("Invalid appointment selection.");
             return;
         }
 
@@ -236,18 +237,18 @@ public class Main {
 
         List<TimeSlot> availableSlots = getAvailableSlots();
         if (availableSlots.isEmpty()) {
-            System.out.println("No available slots for modification.");
+            logger.info("No available slots for modification.");
             return;
         }
 
-        System.out.println("Available new slots:");
+        logger.info("Available new slots:");
         for (int i = 0; i < availableSlots.size(); i++) {
-            System.out.println((i + 1) + ". " + formatSlot(availableSlots.get(i)));
+            logger.info((i + 1) + ". " + formatSlot(availableSlots.get(i)));
         }
 
         int slotChoice = readInt("Select new slot number: ");
         if (slotChoice < 1 || slotChoice > availableSlots.size()) {
-            System.out.println("Invalid new slot selection.");
+            logger.info("Invalid new slot selection.");
             return;
         }
 
@@ -256,10 +257,10 @@ public class Main {
         Appointment modified = bookingService.modifyAppointment(selectedAppointment, newSlot);
 
         if (modified != null) {
-            System.out.println("Appointment modified successfully.");
-            System.out.println("New slot: " + formatSlot(modified.getSlot()));
+            logger.info("Appointment modified successfully.");
+            logger.info("New slot: " + formatSlot(modified.getSlot()));
         } else {
-            System.out.println("Modification failed.");
+            logger.info("Modification failed.");
         }
     }
 
@@ -268,16 +269,16 @@ public class Main {
         List<Appointment> myAppointments = repository.findByUserId(userId);
 
         if (myAppointments.isEmpty()) {
-            System.out.println("No appointments found to cancel.");
+            logger.info("No appointments found to cancel.");
             return;
         }
 
-        System.out.println("Your appointments:");
+        logger.info("Your appointments:");
         printAppointments(myAppointments);
 
         int appointmentChoice = readInt("Select appointment number to cancel: ");
         if (appointmentChoice < 1 || appointmentChoice > myAppointments.size()) {
-            System.out.println("Invalid appointment selection.");
+            logger.info("Invalid appointment selection.");
             return;
         }
 
@@ -286,29 +287,29 @@ public class Main {
         boolean cancelled = bookingService.cancelAppointment(selectedAppointment);
 
         if (cancelled) {
-            System.out.println("Appointment cancelled successfully.");
+            logger.info("Appointment cancelled successfully.");
         } else {
-            System.out.println("Cancellation failed.");
+            logger.info("Cancellation failed.");
         }
     }
 
     private static void administratorManageReservations() {
         if (!session.isAdminLoggedIn()) {
-            System.out.println("Access denied. Administrator login is required.");
+            logger.info("Access denied. Administrator login is required.");
             return;
         }
 
         boolean back = false;
 
         while (!back) {
-            System.out.println("------ Administrator Reservations Menu ------");
-            System.out.println("1. View All Reservations");
-            System.out.println("2. Modify Reservation");
-            System.out.println("3. Cancel Reservation");
-            System.out.println("4. Add Appointment Slot");
-            System.out.println("5. Delete Appointment Slot");
-            System.out.println("0. Back");
-            System.out.println("---------------------------------------------");
+            logger.info("------ Administrator Reservations Menu ------");
+            logger.info("1. View All Reservations");
+            logger.info("2. Modify Reservation");
+            logger.info("3. Cancel Reservation");
+            logger.info("4. Add Appointment Slot");
+            logger.info("5. Delete Appointment Slot");
+            logger.info("0. Back");
+            logger.info("---------------------------------------------");
 
             int choice = readInt("Enter your choice: ");
 
@@ -319,7 +320,7 @@ public class Main {
                 case 4 -> adminAddAppointmentSlot();
                 case 5 -> adminDeleteAppointmentSlot();
                 case 0 -> back = true;
-                default -> System.out.println("Invalid choice. Please try again.");
+                default -> logger.info("Invalid choice. Please try again.");
             }
 
             System.out.println();
@@ -330,7 +331,7 @@ public class Main {
         List<Appointment> allAppointments = repository.findAll();
 
         if (allAppointments.isEmpty()) {
-            System.out.println("No reservations found.");
+            logger.info("No reservations found.");
             return;
         }
 
@@ -341,7 +342,7 @@ public class Main {
         List<Appointment> allAppointments = repository.findAll();
 
         if (allAppointments.isEmpty()) {
-            System.out.println("No reservations available to modify.");
+            logger.info("No reservations available to modify.");
             return;
         }
 
@@ -349,7 +350,7 @@ public class Main {
 
         int appointmentChoice = readInt("Select reservation number to modify: ");
         if (appointmentChoice < 1 || appointmentChoice > allAppointments.size()) {
-            System.out.println("Invalid reservation selection.");
+            logger.info("Invalid reservation selection.");
             return;
         }
 
@@ -357,18 +358,18 @@ public class Main {
 
         List<TimeSlot> availableSlots = getAvailableSlots();
         if (availableSlots.isEmpty()) {
-            System.out.println("No available slots for modification.");
+            logger.info("No available slots for modification.");
             return;
         }
 
-        System.out.println("Available new slots:");
+        logger.info("Available new slots:");
         for (int i = 0; i < availableSlots.size(); i++) {
-            System.out.println((i + 1) + ". " + formatSlot(availableSlots.get(i)));
+            logger.info((i + 1) + ". " + formatSlot(availableSlots.get(i)));
         }
 
         int slotChoice = readInt("Select new slot number: ");
         if (slotChoice < 1 || slotChoice > availableSlots.size()) {
-            System.out.println("Invalid slot selection.");
+            logger.info("Invalid slot selection.");
             return;
         }
 
@@ -379,9 +380,9 @@ public class Main {
         );
 
         if (modified != null) {
-            System.out.println("Reservation modified successfully by administrator.");
+            logger.info("Reservation modified successfully by administrator.");
         } else {
-            System.out.println("Administrator modification failed.");
+            logger.info("Administrator modification failed.");
         }
     }
 
@@ -389,7 +390,7 @@ public class Main {
         List<Appointment> allAppointments = repository.findAll();
 
         if (allAppointments.isEmpty()) {
-            System.out.println("No reservations available to cancel.");
+            logger.info("No reservations available to cancel.");
             return;
         }
 
@@ -397,7 +398,7 @@ public class Main {
 
         int appointmentChoice = readInt("Select reservation number to cancel: ");
         if (appointmentChoice < 1 || appointmentChoice > allAppointments.size()) {
-            System.out.println("Invalid reservation selection.");
+            logger.info("Invalid reservation selection.");
             return;
         }
 
@@ -407,13 +408,13 @@ public class Main {
         );
 
         if (cancelled) {
-            System.out.println("Reservation cancelled successfully by administrator.");
+            logger.info("Reservation cancelled successfully by administrator.");
         } else {
-            System.out.println("Administrator cancellation failed.");
+            logger.info("Administrator cancellation failed.");
         }
     }
     private static void adminAddAppointmentSlot() {
-        System.out.println("Add New Appointment Slot");
+        logger.info("Add New Appointment Slot");
 
         String dateTimeInput = readLine("Enter slot date and time (yyyy-MM-dd HH:mm): ");
         int duration = readInt("Enter duration in minutes: ");
@@ -423,18 +424,18 @@ public class Main {
             LocalDateTime start = LocalDateTime.parse(dateTimeInput, formatter);
 
             if (!start.isAfter(LocalDateTime.now())) {
-                System.out.println("Slot must be in the future.");
+                logger.info("Slot must be in the future.");
                 return;
             }
 
             if (duration <= 0 || capacity <= 0) {
-                System.out.println("Duration and capacity must be greater than zero.");
+                logger.info("Duration and capacity must be greater than zero.");
                 return;
             }
 
             for (TimeSlot slot : slots) {
                 if (slot.getStart().equals(start)) {
-                    System.out.println("A slot already exists at this time.");
+                    logger.info("A slot already exists at this time.");
                     return;
                 }
             }
@@ -442,11 +443,11 @@ public class Main {
             TimeSlot newSlot = new TimeSlot(start, duration, capacity);
             slots.add(newSlot);
 
-            System.out.println("Appointment slot added successfully.");
-            System.out.println("New slot: " + formatSlot(newSlot));
+            logger.info("Appointment slot added successfully.");
+            logger.info("New slot: " + formatSlot(newSlot));
 
         } catch (Exception e) {
-            System.out.println("Invalid date/time format. Please use yyyy-MM-dd HH:mm");
+            logger.info("Invalid date/time format. Please use yyyy-MM-dd HH:mm");
         }
     }
     private static void adminDeleteAppointmentSlot() {
@@ -459,53 +460,53 @@ public class Main {
         }
 
         if (futureSlots.isEmpty()) {
-            System.out.println("No future slots available to delete.");
+            logger.info("No future slots available to delete.");
             return;
         }
 
-        System.out.println("Future slots:");
+        logger.info("Future slots:");
         for (int i = 0; i < futureSlots.size(); i++) {
             TimeSlot slot = futureSlots.get(i);
             String status = slot.isBooked() ? "BOOKED" : "AVAILABLE";
-            System.out.println((i + 1) + ". " + formatSlot(slot) + " | Status: " + status);
+            logger.info((i + 1) + ". " + formatSlot(slot) + " | Status: " + status);
         }
 
         int choice = readInt("Select slot number to delete: ");
         if (choice < 1 || choice > futureSlots.size()) {
-            System.out.println("Invalid slot selection.");
+            logger.info("Invalid slot selection.");
             return;
         }
 
         TimeSlot selectedSlot = futureSlots.get(choice - 1);
 
         if (selectedSlot.isBooked()) {
-            System.out.println("Cannot delete a booked slot.");
+            logger.info("Cannot delete a booked slot.");
             return;
         }
 
         boolean removed = slots.remove(selectedSlot);
 
         if (removed) {
-            System.out.println("Appointment slot deleted successfully.");
+            logger.info("Appointment slot deleted successfully.");
         } else {
-            System.out.println("Deletion failed.");
+            logger.info("Deletion failed.");
         }
     }
     private static void sendMockAppointmentReminders() {
         List<Appointment> allAppointments = repository.findAll();
 
         if (allAppointments.isEmpty()) {
-            System.out.println("No appointments found. No mock reminders sent.");
+            logger.info("No appointments found. No mock reminders sent.");
             return;
         }
 
         mockReminderService.sendReminders(allAppointments);
 
-        System.out.println("Mock reminder messages generated successfully.");
-        System.out.println("Recorded reminder messages:");
+        logger.info("Mock reminder messages generated successfully.");
+        logger.info("Recorded reminder messages:");
 
         for (String message : mockNotificationService.getSentMessages()) {
-            System.out.println("- " + message);
+            logger.info("- " + message);
         }
     }
 
@@ -513,20 +514,20 @@ public class Main {
         List<Appointment> allAppointments = repository.findAll();
 
         if (allAppointments.isEmpty()) {
-            System.out.println("No appointments found. No email reminders sent.");
+            logger.info("No appointments found. No email reminders sent.");
             return;
         }
 
         emailReminderService.sendReminders(allAppointments);
-        System.out.println("Email reminders sent successfully.");
+        logger.info("Email reminders sent successfully.");
     }
 
     private static AppointmentType chooseAppointmentType() {
         AppointmentType[] types = AppointmentType.values();
 
-        System.out.println("Appointment Types:");
+        logger.info("Appointment Types:");
         for (int i = 0; i < types.length; i++) {
-            System.out.println((i + 1) + ". " + types[i]);
+            logger.info((i + 1) + ". " + types[i]);
         }
 
         int choice = readInt("Select appointment type: ");
@@ -552,7 +553,7 @@ public class Main {
     private static void printAppointments(List<Appointment> appointments) {
         for (int i = 0; i < appointments.size(); i++) {
             Appointment appointment = appointments.get(i);
-            System.out.println(
+            logger.info(
                     (i + 1) + ". User: " + appointment.getUser().getName()
                             + " | ID: " + appointment.getUser().getId()
                             + " | Email: " + appointment.getUser().getEmail()
@@ -578,7 +579,7 @@ public class Main {
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number.");
+                logger.info("Please enter a valid number.");
             }
         }
     }

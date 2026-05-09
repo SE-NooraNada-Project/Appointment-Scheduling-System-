@@ -2,7 +2,7 @@ package com.appointment.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 /**
  * Represents a schedule containing multiple time slots.
@@ -41,6 +41,6 @@ public class Schedule {
     public List<TimeSlot> getAvailableSlots() {
         return slots.stream()
                 .filter(s -> !s.isBooked())
-                .collect(Collectors.toList());
+                .toList();
     }
 }
