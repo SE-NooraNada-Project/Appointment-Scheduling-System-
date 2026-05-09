@@ -44,8 +44,8 @@ public class Main {
     private static final ReminderService emailReminderService;
 
     private static final List<TimeSlot> slots = new ArrayList<>();
-
-
+    private static final String USER_ID_PROMPT = "Enter your user ID: ";
+    private static final String INVALID_SLOT_MSG = "Invalid slot selection.";
     static {
         List<BookingRuleStrategy> rules = new ArrayList<>();
         rules.add(new DurationRule(120));
@@ -152,7 +152,7 @@ public class Main {
     }
 
     private static void bookAppointment() {
-        String userId = readLine("Enter your user ID: ");
+        String userId = readLine(USER_ID_PROMPT);
         String userName = readLine("Enter your name: ");
         String userEmail = readLine("Enter your email: ");
         User user = new User(userId, userName, userEmail);
@@ -170,7 +170,7 @@ public class Main {
 
         int slotChoice = readInt("Enter slot number: ");
         if (slotChoice < 1 || slotChoice > availableSlots.size()) {
-            logger.info("Invalid slot selection.");
+            logger.info(INVALID_SLOT_MSG);
             return;
         }
 
@@ -204,7 +204,7 @@ public class Main {
     }
 
     private static void viewMyAppointments() {
-        String userId = readLine("Enter your user ID: ");
+        String userId = readLine(USER_ID_PROMPT);
         List<Appointment> appointments = repository.findByUserId(userId);
 
         if (appointments.isEmpty()) {
@@ -216,7 +216,7 @@ public class Main {
     }
 
     private static void modifyMyAppointment() {
-        String userId = readLine("Enter your user ID: ");
+        String userId = readLine(USER_ID_PROMPT);
         List<Appointment> myAppointments = repository.findByUserId(userId);
 
         if (myAppointments.isEmpty()) {
@@ -265,7 +265,7 @@ public class Main {
     }
 
     private static void cancelMyAppointment() {
-        String userId = readLine("Enter your user ID: ");
+        String userId = readLine(USER_ID_PROMPT);
         List<Appointment> myAppointments = repository.findByUserId(userId);
 
         if (myAppointments.isEmpty()) {
@@ -369,7 +369,7 @@ public class Main {
 
         int slotChoice = readInt("Select new slot number: ");
         if (slotChoice < 1 || slotChoice > availableSlots.size()) {
-            logger.info("Invalid slot selection.");
+            logger.info(INVALID_SLOT_MSG);
             return;
         }
 
@@ -473,7 +473,7 @@ public class Main {
 
         int choice = readInt("Select slot number to delete: ");
         if (choice < 1 || choice > futureSlots.size()) {
-            logger.info("Invalid slot selection.");
+            logger.info(INVALID_SLOT_MSG);
             return;
         }
 
