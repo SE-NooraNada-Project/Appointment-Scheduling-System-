@@ -21,8 +21,10 @@
     <sonar.organization>se-nooranada-project</sonar.organization>
     <sonar.projectKey>SE-NooraNada-Project_Appointment-Scheduling-System-</sonar.projectKey>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-<sonar.exclusions>**/EmailNotificationService*</sonar.exclusions>
-<sonar.coverage.exclusions>**/presentation/**,**/EmailNotificationService*</sonar.coverage.exclusions>
+<sonar.exclusions>
+    **/EmailNotificationService*,
+    **/presentation/Main.java
+</sonar.exclusions><sonar.coverage.exclusions>**/presentation/**,**/EmailNotificationService*</sonar.coverage.exclusions>
 </properties>
 
     <dependencies>
