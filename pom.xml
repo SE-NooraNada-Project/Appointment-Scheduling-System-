@@ -12,12 +12,16 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.10.2</junit.version>
-        <mockito.version>5.11.0</mockito.version>
-    </properties>
+    <maven.compiler.source>22</maven.compiler.source>
+    <maven.compiler.target>22</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.version>5.10.2</junit.version>
+    <mockito.version>5.11.0</mockito.version>
+
+    <sonar.organization>se-nooranada-project</sonar.organization>
+    <sonar.projectKey>SE-NooraNada-Project_Appointment-Scheduling-System-</sonar.projectKey>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+</properties>
 
     <dependencies>
 
