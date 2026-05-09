@@ -22,6 +22,7 @@
     <sonar.projectKey>SE-NooraNada-Project_Appointment-Scheduling-System-</sonar.projectKey>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 <sonar.exclusions>**/EmailNotificationService*</sonar.exclusions>
+<sonar.coverage.exclusions>**/presentation/Main.java**/EmailNotificationService*</sonar.coverage.exclusions>
 </properties>
 
     <dependencies>
@@ -87,6 +88,7 @@
                     <excludes>
                         <exclude>**/presentation/**</exclude>
                         <exclude>**/EmailNotificationService*</exclude>
+ <exclude>**/presentation/Main*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
